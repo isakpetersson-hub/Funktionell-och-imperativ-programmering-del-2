@@ -1,5 +1,3 @@
-# Encoding: ISO-8859-1
-
 db = [[['författare', ['john', 'zelle']],
        ['titel', ['python', 'programming', 'an', 'introduction', 'to',
                   'computer', 'science']],
