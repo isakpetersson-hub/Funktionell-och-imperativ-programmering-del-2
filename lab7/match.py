@@ -13,6 +13,8 @@ def match(seq, pattern):
             return match(seq[1:], pattern)
     elif not seq:
         return False
+    elif isinstance(pattern[0],list):
+        match(seq[0],pattern[0]) and match(seq[1:],pattern[1:])
     elif pattern[0] == '&':
         return match(seq[1:], pattern[1:])
     elif seq[0] == pattern[0]:
