@@ -7,19 +7,12 @@ def match(seq, pattern):
     if not pattern:
         return not seq
     elif pattern[0] == '--':
-        if match(seq, pattern[1:]):
-            return True
-        elif not seq:
-            return False
-        else:
-            return match(seq[1:], pattern)
+        return match(seq,pattern[1:])or (seq and match(seq[1:],pattern))
     elif not seq:
         return False
     elif isinstance(pattern[0],list):
         return match(seq[0],pattern[0]) and match(seq[1:],pattern[1:])
-    elif pattern[0] == '&':
-        return match(seq[1:], pattern[1:])
-    elif seq[0] == pattern[0]:
+    elif pattern[0] in {'&',seq[0]}:
         return match(seq[1:], pattern[1:])
     else:
         return False
@@ -34,4 +27,4 @@ def search(pattern,db):
 #print(search([['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']], db))
 #print(search(['--', ['år', 2042], '--'], db))
 #print(search(['--', ['titel', ['&', '&']], '--'], db))
-#print(search([['författare', ['&','&']], ['titel', ['--', 'lisp', '--']], ['år', 1993]], db))
+print(search([['författare', ['&','&']], ['titel', ['--', 'lisp', '--']], ['år', 1993]], db))
