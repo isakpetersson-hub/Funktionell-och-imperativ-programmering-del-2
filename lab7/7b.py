@@ -46,3 +46,15 @@ def seize_leaf_fn(key):
 
 def seize_inner_node_fn(key,left,right):
     return 1+left+right
+
+def tree_depth(tree):
+    def inner_node_fn(key_value, left, right):
+        return 1 + max(left, right)
+
+    def leaf_fn(leaf):
+        return 1
+
+    def empty_tree_fn():
+        return 0
+
+    return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
