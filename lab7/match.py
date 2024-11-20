@@ -16,7 +16,7 @@ def match(seq, pattern):
     elif not seq:
         return False
     elif isinstance(pattern[0],list):
-        return match(seq[0],pattern[0])
+        return match(seq[0],pattern[0]) and match(seq[1:],pattern[1:])
     elif pattern[0] == '&':
         return match(seq[1:], pattern[1:])
     elif seq[0] == pattern[0]:
@@ -34,4 +34,4 @@ def search(pattern,db):
 #print(search([['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']], db))
 #print(search(['--', ['år', 2042], '--'], db))
 #print(search(['--', ['titel', ['&', '&']], '--'], db))
-print(search([['författare', ['&','&']], ['titel', ['--', 'lisp', '--']], ['år', '1993']], db))
+#print(search([['författare', ['&','&']], ['titel', ['--', 'lisp', '--']], ['år', 1993]], db))
