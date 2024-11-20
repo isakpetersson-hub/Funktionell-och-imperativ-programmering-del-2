@@ -4,8 +4,12 @@ def traverse(tree,inner_node_fn,leaf_fn,empty_tree_fn):
     if is_empty_tree(tree):
         return empty_tree_fn()
     elif isinstance(tree,list) and len(tree)==3:
-        #kör kod
-        return
+        left_tree = left_subtree(tree)
+        right_tree = right_subtree(tree)
+        key_value = key(tree)
+        left = traverse(left_tree,inner_node_fn,leaf_fn,empty_tree_fn)
+        right = traverse(right_tree,inner_node_fn,leaf_fn,empty_tree_fn)
+        return inner_node_fn(key_value,left,right)
     elif isinstance(tree,list):
         raise ValueError("felaktig format på listan")
     else:
