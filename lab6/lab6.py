@@ -11,22 +11,21 @@ def exec_program(input_list):
         exec_statments(program_statements(input_list),variable_table)
         return variable_table
 def exec_statments(input_list,var_table):
-    if empty_statements(input_list):
-        return None
-    exec_statment(first_statement(input_list),var_table)
-    exec_statments(rest_statements(input_list),var_table)
+    if not empty_statements(input_list):
+        exec_statment(first_statement(input_list),var_table)
+        exec_statments(rest_statements(input_list),var_table)
 def exec_statment(input,var_table):
     if is_repetition(input):
         exec_while(input,var_table)
-    if input[0] == "if":
+    if is_selection(input):
         exec_if(input,var_table)
-    if input[0] == "print":
-        exec_print(input[1],var_table)
-    if input[0]=="set":
+    if is_output(input):
+        exec_print(input_variable(input),var_table)
+    if is_assignment(input):
         exec_assignments(input,var_table)
     if is_binaryexpr(input):
         return exec_binary_expression(input,var_table)
-    if input[0]=="read":
+    if is_input(input):
         exec_read(input,var_table)
     if is_condition(input):
         return exec_condition(input,var_table)
@@ -37,11 +36,16 @@ def exec_print(input,var_table):
     else:
         print(input)
 def exec_if(input,var_table):
-    if_statment = input[1]
-    if if_statment[1] == "==" and if_statment[0] == if_statment[2]:exec_statment(input[2]) 
-    elif if_statment[1] == "<" and if_statment[0] < if_statment[2]:exec_statment(input[2]) 
-    elif if_statment[1] == ">" and if_statment[0] > if_statment[2]:exec_statment(input[2]) 
-    else: exec_statment(input[3])
+    if_statment = selection_condition(input)
+    cond_left = condition_left(input)
+    cond_right = condition_right(input)
+    if if_statment == "==" and cond_left == cond_right:
+        return exec_statment(selection_true_branch(input))
+    if if_statment == "<" and cond_left < cond_right:
+        return exec_statment(selection_true_branch(input))
+    if if_statment == ">" and cond_left > cond_right:
+        return exec_statment(selection_true_branch(input))
+    else: return exec_statment(selection_false_branch(input))
 
 def exec_assignments(input,var_table):
     if is_assignment(input):
@@ -77,7 +81,9 @@ def exec_binary_expression(input, var_table):
     
 def exec_read(input_list,var_table):
     user_input = input()
-    var_table[input_list[1]]=int(user_input)
+    try:
+        var_table[input_list[1]]=int(user_input)
+    finally:ValueError("Wrong input")
 
 def exec_while(input,var_table):
     cond = repetition_condition(input)
