@@ -1,4 +1,12 @@
 from tree_algoritms import *
+# def empty_tree_fn():
+#     return 0
+
+# def leaf_fn(key):
+#     return key**2
+
+# def inner_node_fn(key,left_val,right_val):
+#     return key+left_val
 
 def traverse(tree,inner_node_fn,leaf_fn,empty_tree_fn):
     if is_empty_tree(tree):
@@ -14,38 +22,32 @@ def traverse(tree,inner_node_fn,leaf_fn,empty_tree_fn):
         raise ValueError("felaktig format på listan")
     else:
         return leaf_fn(tree)
-    
-def empty_tree_fn():
-    return 0
-
-def leaf_fn(key):
-    return key**2
-
-def inner_node_fn(key,left_val,right_val):
-    return key+left_val
 
 def contains_key(key,tree):
-    return(traverse(tree,contains_inner_node,contains_leaf_fn(key),contains_empty_tree_fn))
-
-def contains_leaf_fn(key):
-    def leaf_compare(tree):
-        return tree == key
-    return leaf_compare
-
-def contains_inner_node(key,left,right):
-    return left or right
-
-def contains_empty_tree_fn():
-    return False
+    def leaf_fn(key):
+        def leaf_compare(tree):
+            return tree == key
+        return leaf_compare
+    
+    def inner_node_fn(key,left,right):
+        return left or right
+    
+    def empty_tree_fn():
+        return False
+    
+    return(traverse(tree,inner_node_fn,leaf_fn(key),empty_tree_fn))
 
 def tree_size(tree):
-    return(traverse(tree,seize_inner_node_fn,seize_leaf_fn,empty_tree_fn))
+    def leaf_fn(key):
+        return 1
+    
+    def empty_tree_fn():
+        return 0
 
-def seize_leaf_fn(key):
-    return 1
-
-def seize_inner_node_fn(key,left,right):
-    return 1+left+right
+    def inner_node_fn(key,left,right):
+        return 1+left+right
+    
+    return(traverse(tree,inner_node_fn,leaf_fn,empty_tree_fn))
 
 def tree_depth(tree):
     def inner_node_fn(key_value, left, right):
