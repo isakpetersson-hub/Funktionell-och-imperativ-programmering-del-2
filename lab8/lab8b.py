@@ -3,7 +3,8 @@
 # =========================================================================
 
 # Define the type somehow...  The initial "" is simply here as a placeholder.
-TimeSpanSeq = ""
+from cal_abstraction import *
+TimeSpanSeq = []
 
 # =========================================================================
 #  Function implementations
@@ -12,16 +13,18 @@ TimeSpanSeq = ""
 # Implement these functions!  Also determine if you need *additional* functions.
 
 def new_time_span_seq():
-    pass
+    return []
 
 
 def tss_is_empty(tss):
-    pass
+    return len(tss)==0
 
 
 def tss_plus_span(tss, ts):
-    pass
-
+    for i,existing_tss in enumerate(tss):
+        if ts_start(ts)<ts_start(existing_tss):
+            tss.insert(i,ts)
+    return tss
 
 def tss_iter_spans(tss):
     pass
