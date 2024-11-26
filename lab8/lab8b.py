@@ -24,14 +24,18 @@ def tss_plus_span(tss, ts):
     for i,existing_tss in enumerate(tss):
         if ts_start(ts)<ts_start(existing_tss):
             tss.insert(i,ts)
+            break
     return tss
 
 def tss_iter_spans(tss):
-    pass
-
+    return iter(tss)
 
 def show_time_spans(tss):
-    pass
+    if tss_is_empty:
+        return None
+    else:
+        for i in tss:
+            print(i)
 
 
 # Keep only time spans that satisfy pred.
