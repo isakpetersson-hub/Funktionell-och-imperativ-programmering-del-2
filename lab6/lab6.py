@@ -23,12 +23,8 @@ def exec_statment(input,var_table):
         exec_print(input_variable(input),var_table)
     if is_assignment(input):
         exec_assignments(input,var_table)
-    if is_binaryexpr(input):
-        return exec_binary_expression(input,var_table)
     if is_input(input):
         exec_read(input,var_table)
-    if is_condition(input):
-        return exec_condition(input,var_table)
 def exec_print(input,var_table):
     if input in var_table:
         value = exec_assignments(input,var_table)
@@ -36,21 +32,21 @@ def exec_print(input,var_table):
     else:
         print(input)
 def exec_if(input,var_table):
-    if_statment = selection_condition(input)
-    cond_left = condition_left(input)
-    cond_right = condition_right(input)
+    input_statment = selection_condition(input)
+    if_statment = selection_condition(input_statment)
+    cond_left = condition_left(input_statment)
+    cond_right = condition_right(input_statment)
     if if_statment == "==" and cond_left == cond_right:
-        return exec_statment(selection_true_branch(input))
+        return exec_statment(selection_true_branch(input),var_table)
     if if_statment == "<" and cond_left < cond_right:
-        return exec_statment(selection_true_branch(input))
+        return exec_statment(selection_true_branch(input),var_table)
     if if_statment == ">" and cond_left > cond_right:
-        return exec_statment(selection_true_branch(input))
-    else: return exec_statment(selection_false_branch(input))
-
+        return exec_statment(selection_true_branch(input),var_table)
+    else: return exec_statment(selection_false_branch(input),var_table)
 def exec_assignments(input,var_table):
     if is_assignment(input):
         if is_binaryexpr(assignment_expression(input)):
-            var_value = exec_statment(assignment_expression(input),var_table)
+            var_value = exec_binary_expression(assignment_expression(input),var_table)
         else:
             var_value=assignment_expression(input)
         var_name=assignment_variable(input)
@@ -63,11 +59,11 @@ def exec_binary_expression(input, var_table):
     left = binaryexpr_left(input)
     right = binaryexpr_right(input)
     if isinstance(left,list):
-        left = exec_statment(left,var_table)
+        left = exec_binary_expression(left,var_table)
     elif left in var_table:
         left = var_table[left]
     if isinstance(right,list):
-        right=exec_statment(right,var_table)
+        right=exec_binary_expression(right,var_table)
     elif right in var_table:
         right = var_table[right]
     if binary_op=="+":
@@ -88,7 +84,7 @@ def exec_read(input_list,var_table):
 def exec_while(input,var_table):
     cond = repetition_condition(input)
     statement = repetition_statements(input)
-    while exec_statment(cond,var_table):
+    while exec_condition(cond,var_table):
         exec_statments(statement,var_table)
 
 def exec_condition(input,var_table):
@@ -110,8 +106,4 @@ def exec_condition(input,var_table):
     elif op=="=":
         return left==right
     else: return False
-# exec_program(calc1)
-print(exec_program(calc4))
-
-#lägg till read
-#lägg till tabeller för variabler
+print(exec_program(calc3))
