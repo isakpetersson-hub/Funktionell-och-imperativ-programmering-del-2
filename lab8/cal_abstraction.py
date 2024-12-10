@@ -357,7 +357,6 @@ else:
 # production code.
 from lab8a import *
 
-
 def new_duration_from_string(s: str) -> Duration:
     """Create a duration corresponding to the string "HH:MM". The string must be
      well-formed and the number of hours can consist of an arbitrary number of digits."""
