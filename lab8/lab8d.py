@@ -17,4 +17,15 @@ else:
 
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
-    pass
+    free_time=[]
+    cal_day.sort()
+    iter_start=start
+    for appointment in cd_iter_appointments(cal_day):
+        time_span = appointment.span
+        appointment_start = ts_start(time_span)
+        appointment_end = ts_end(time_span)
+        if iter_start<appointment_start<end:
+            free_time.append((start,appointment_start))
+        if appointment_end>iter_start:
+            iter_start=appointment_end
+    
