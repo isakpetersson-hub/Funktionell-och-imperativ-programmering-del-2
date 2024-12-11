@@ -36,6 +36,7 @@ else:
     from lab8b import *
     from lab8d import free_spans
 
+
 # In the code below, we assume that the function that generates the set of
 # free time spans (a time_spans object) is called free_spans. It is also
 # assumed to be invoked by free_spans(cal_day, ts_start, ts_end), in that

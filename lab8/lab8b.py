@@ -5,7 +5,6 @@
 # Define the type somehow...  The initial "" is simply here as a placeholder.
 from cal_abstraction import *
 TimeSpanSeq = []
-
 # =========================================================================
 #  Function implementations
 # =========================================================================
@@ -13,7 +12,7 @@ TimeSpanSeq = []
 # Implement these functions!  Also determine if you need *additional* functions.
 
 def new_time_span_seq():
-    return []
+    return TimeSpanSeq
 
 
 def tss_is_empty(tss):
@@ -21,10 +20,14 @@ def tss_is_empty(tss):
 
 
 def tss_plus_span(tss, ts):
+    if len(tss) == 0:
+        tss.insert(0,ts)
     for i,existing_tss in enumerate(tss):
         if ts_start(ts)<ts_start(existing_tss):
             tss.insert(i,ts)
             break
+    if ts not in tss:
+        tss.append(ts)
     return tss
 
 def tss_iter_spans(tss):

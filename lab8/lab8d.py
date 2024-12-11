@@ -57,16 +57,3 @@ def show_free(calendar_name: str,day:int,month:str,start:str, end: str):
         # end_hour,end_minute=end_time
         show_ts(new_time_span(itr_start_time,itr_end_time))
         print("")
-
-
-# create("test")
-# book("test",20,"jan","12:00","14:00","klyva atomer")
-# book("test",20,"jan","15:00","17:00","uppfinna atombomben")
-
-# (show_free(calendarday,new_time_from_string("08:00"),new_time_from_string("21:00")))
-create("test")
-book("test",20,"jan","08:00","11:00","klyva atomer")
-book("test",20,"jan","13:00","17:00","uppfinna atombomben")
-create("test2")
-book("test2",20,"jan","11:00","12:00","klyva atomer")
-show_free("test",21,"jan","09:00","14:00")
