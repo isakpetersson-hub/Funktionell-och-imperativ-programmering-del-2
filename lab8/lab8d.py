@@ -22,32 +22,51 @@ def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
     free_time=[]
     # cal_day.sort()
     iter_start=start
+    if cd_is_empty(cal_day):
+        free_time.append((start,end))
+    else:
+        for appointment in cd_iter_appointments(cal_day):
+            time_span = appointment.span
+            appointment_start = ts_start(time_span)
+            appointment_end = ts_end(time_span)
 
-    for appointment in cd_iter_appointments(cal_day):
-        time_span = appointment.span
-        appointment_start = ts_start(time_span)
-        appointment_end = ts_end(time_span)
-
-        if iter_start<appointment_start<end:
-            free_time.append((iter_start,appointment_start))
-            iter_start=appointment_end
-        elif iter_start<appointment_end:
-            iter_start=appointment_end
-    if appointment_end<end:
-        free_time.append((appointment_end,end))  
-      
-    print(free_time)
+            if iter_start<appointment_start<end:
+                free_time.append((iter_start,appointment_start))
+                iter_start=appointment_end
+            elif iter_start<appointment_end:
+                iter_start=appointment_end
+        if appointment_end<end:
+            free_time.append((appointment_end,end))  
     return free_time
 
-day = new_day(20)
+def show_free(calendar_name: str,day:int,month:str,start:str, end: str):
 
-Appointment2 = new_appointment(new_time_span(new_time(new_hour(13),new_minute(00)),new_time(new_hour(15),new_minute(00))),new_subject("test"))
-Appointment = new_appointment(new_time_span(new_time(new_hour(10),new_minute(00)),new_time(new_hour(11),new_minute(00))),new_subject("test"))
+    day = new_day(day)
+    month = new_month(month)
+    start_time = new_time_from_string(start)
+    end_time = new_time_from_string(end)
+    new_date(day,month)
 
-calendarday=new_calendar_day(day,[Appointment])
+    cal_year = get_calendar(calendar_name)
+    cal_month = cy_get_month(month,cal_year)
+    cal_day = cm_get_day(cal_month,day)
+
+    list = free_spans(cal_day, start_time, end_time)
+    for (itr_start_time,itr_end_time) in list:
+        # start_hour,start_minute=start_time
+        # end_hour,end_minute=end_time
+        show_ts(new_time_span(itr_start_time,itr_end_time))
+        print("")
+
 
 # create("test")
 # book("test",20,"jan","12:00","14:00","klyva atomer")
 # book("test",20,"jan","15:00","17:00","uppfinna atombomben")
 
-print(free_spans(calendarday,new_time_from_string("08:00"),new_time_from_string("21:00")))
+# (show_free(calendarday,new_time_from_string("08:00"),new_time_from_string("21:00")))
+create("test")
+book("test",20,"jan","08:00","11:00","klyva atomer")
+book("test",20,"jan","13:00","17:00","uppfinna atombomben")
+create("test2")
+book("test2",20,"jan","11:00","12:00","klyva atomer")
+show_free("test",21,"jan","09:00","14:00")
