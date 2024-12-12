@@ -4,7 +4,9 @@
 
 # Define the type somehow...  The initial "" is simply here as a placeholder.
 from cal_abstraction import *
-TimeSpanSeq = []
+
+TimeSpanSeq = NamedTuple("TimeSpanSeq", [("TimeSpan", list)])
+
 # =========================================================================
 #  Function implementations
 # =========================================================================
@@ -12,7 +14,8 @@ TimeSpanSeq = []
 # Implement these functions!  Also determine if you need *additional* functions.
 
 def new_time_span_seq():
-    return TimeSpanSeq
+
+    return TimeSpanSeq()
 
 
 def tss_is_empty(tss):
