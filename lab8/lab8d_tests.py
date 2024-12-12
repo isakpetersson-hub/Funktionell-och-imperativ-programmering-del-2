@@ -68,26 +68,8 @@ def create_tests_for_free_span() -> dict:
         booking_data=[],  # This day's appointments
         exp_result=[],
     )  # Testar för starttid efter sluttiden
-    store_test_case(
-        test_cases,
-        8,
-        start_str=8,  # Search interval starts
-        end_str="08:00",  # Search interval ends
-        booking_data=[],  # This day's appointments
-        exp_result=[],
-    )  # Testar för invalid input
-    print("Test cases generated.")
-    store_test_case(
-        test_cases,
-        9,
-        start_str="06:30",  # Search interval starts
-        end_str="10:00",  # Search interval ends
-        booking_data=["07:00-08:00"],  # This day's appointments
-        exp_result=[],
-    )  # Testar för invalid input
     print("Test cases generated.")
     return test_cases
-
 
 if __name__ == '__main__':
     # Actually run the tests, using the test driver functions

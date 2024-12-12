@@ -19,11 +19,13 @@ else:
 
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
-    free_time=[]
+    free_time = new_time_span_seq()
     # cal_day.sort()
     iter_start=start
+    if start>=end:
+        return free_time
     if cd_is_empty(cal_day):
-        free_time.append((start,end))
+        tss_plus_span(free_time,new_time_span(start,end))
     else:
         for appointment in cd_iter_appointments(cal_day):
             time_span = appointment.span
@@ -31,12 +33,12 @@ def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
             appointment_end = ts_end(time_span)
 
             if iter_start<appointment_start<end:
-                free_time.append((iter_start,appointment_start))
+                tss_plus_span(free_time,new_time_span(iter_start,appointment_start))
                 iter_start=appointment_end
             elif iter_start<appointment_end:
                 iter_start=appointment_end
         if appointment_end<end:
-            free_time.append((appointment_end,end))  
+                tss_plus_span(free_time,new_time_span(appointment_end,end))
     return free_time
 
 def show_free(calendar_name: str,day:int,month:str,start:str, end: str):
