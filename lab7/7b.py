@@ -15,7 +15,7 @@ def traverse(tree,inner_node_fn,leaf_fn,empty_tree_fn):
         left_tree = left_subtree(tree) #delar upp trädet i vänster och höger
         right_tree = right_subtree(tree)
         key_value = key(tree)
-        left = traverse(left_tree,inner_node_fn,leaf_fn,empty_tree_fn)
+        left = traverse(left_tree,inner_node_fn,leaf_fn,empty_tree_fn) #Rekrusivt går igen trädet för vänster, höger och key
         key_value = traverse(key_value,inner_node_fn,leaf_fn,empty_tree_fn)
         right = traverse(right_tree,inner_node_fn,leaf_fn,empty_tree_fn)
         return inner_node_fn(key_value,left,right)
@@ -29,7 +29,7 @@ def contains_key(key,tree):
         return leaf == key
     
     def inner_node_fn(key,left,right): 
-        return left or right #Om vänster är ett okej värde, returnera det, annars returnera höger.
+        return left or right or key #Om vänster är ett okej värde, returnera det, annars returnera höger.
     
     def empty_tree_fn(): #Returnerar falskt om trädet är tomt.
         return False
