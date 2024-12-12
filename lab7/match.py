@@ -24,7 +24,7 @@ def search(pattern,db):
             result.append(data)
     return result
 
-#print(search([['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']], db))
-#print(search(['--', ['år', 2042], '--'], db))
-#print(search(['--', ['titel', ['&', '&']], '--'], db))
+print(search([['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']], db))
+print(search(['--', ['år', 2042], '--'], db))
+print(search(['--', ['titel', ['&', '&']], '--'], db))
 print(search([['författare', ['&','&']], ['titel', ['--', 'lisp', '--']], ['år', 1993]], db))
